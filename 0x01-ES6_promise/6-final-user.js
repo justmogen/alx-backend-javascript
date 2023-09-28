@@ -15,4 +15,5 @@ export default async function handleProfileSignup(firstName, lastName, fileName)
     });
     promises.push('Guardrail was processed');
   }
+  return promises;
 }
