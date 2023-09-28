@@ -14,6 +14,8 @@ export default async function handleProfileSignup(firstName, lastName, fileName)
       value: `Error: ${fileName} cannot be processed`,
     });
     promises.push('Guardrail was processed');
+
+  } finally {
+    return promises;
   }
-  return promises;
 }
