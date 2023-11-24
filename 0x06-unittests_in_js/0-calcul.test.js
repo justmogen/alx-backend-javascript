@@ -1,20 +1,42 @@
-const assert = require("assert");
-const calculateNumber = require("./0-calcul.js");
+const assert = require('assert');
+const mocha = require('mocha');
 
-describe("calculateNumber", function () {
-    it('should return the rounded sum of two numbers', () => {
-        assert.strictEqual(calculateNumber(1, 3), 4);
-    });
+const calculateNumber = require('./0-calcul');
 
-    it("should return the rounded sum of an integer abd a float", () => {
-        assert.strictEqual(calculateNumber(1, 3.7), 5);
-    });
+describe('calculateNumber', () => {
+  it('should return sum of integers', () => {
+    assert.strictEqual(calculateNumber(1, 3), 4);
+    assert.strictEqual(calculateNumber(1, -1), 0);
+    assert.strictEqual(calculateNumber(1, -3), -2);
+  });
 
-    it('should return the rounded sum of two floats', () => {
-        assert.strictEqual(calculateNumber(1.2, 3.7), 5);
+  it('should round floats', () => {
+    assert.strictEqual(calculateNumber(1, 3.7), 5);
+    assert.strictEqual(calculateNumber(1.2, 3.7), 5);
+    assert.strictEqual(calculateNumber(1.5, 3.7), 6);
+    assert.strictEqual(calculateNumber(0.1, 0), 0);
+    assert.strictEqual(calculateNumber(1.4, -4.5), -3);
+  });
+
+  it('should return the rounded number if only one is provided', () => {
+    assert.strictEqual(calculateNumber(2), 2);
+    assert.strictEqual(calculateNumber(2.7), 3);
+  });
+
+  it('should cast non-numbers into numbers', () => {
+    assert.strictEqual(calculateNumber(true, '3'), 4);
+    assert.strictEqual(calculateNumber(1, '3.7'), 5);
+    assert.strictEqual(calculateNumber('1.2', 3.7), 5);
+  });
+
+  it('should throw typeerror if either params cannot be coerced to a number', () => {
+    assert.throws(() => calculateNumber('hello'), {
+      name: 'TypeError',
+      message: 'Parameters must be numbers'
     });
-    
-    it('should return the rounded sum of two floats, with proper rounding', () => {
-        assert.strictEqual(calculateNumber(1.5, 3.7), 6);
+    assert.throws(() => calculateNumber(1.2, 'dog'), {
+      name: 'TypeError',
+      message: 'Parameters must be numbers'
     });
-})
+  });
+});
