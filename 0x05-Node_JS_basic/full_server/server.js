@@ -6,7 +6,7 @@ const port = 1245;
 
 app.use('/', router);
 app.use('/students', router);
-app.use('/students/:major' router);
+app.use('/students/:major', router);
 
 app.listen(port, () => {
 	console.log(`Listening at http://localhost:${port}`);
